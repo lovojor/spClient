@@ -1,0 +1,43 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd">
+	<mvc:annotation-driven />
+	<context:component-scan base-package="com.oncedev.controller" />
+	<context:component-scan base-package="com.oncedev.service" />
+	
+	<bean id="cacheManager" class="org.springframework.cache.support.SimpleCacheManager">
+        <property name="caches">
+            <set>
+                <bean
+                  class="org.springframework.cache.concurrent.ConcurrentMapCacheFactoryBean"
+                  name="addresses"/>
+            </set>
+        </property>
+    </bean>
+
+	<bean class="com.oncedev.service.conf.SharePointProperties">
+		<property name="username" value="carlos.rivadeneira@oncedev.com.ec" />
+		<property name="password" value="Carg1984!" />
+		<property name="endpointToken" value="https://login.microsoftonline.com" />
+		<property name="endpointDomain" value="https://proyectoscomec.sharepoint.com" />
+	</bean>
+
+	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
+	</bean>
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/view/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+</beans>
